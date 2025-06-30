@@ -13,8 +13,9 @@ Consists of .png and .ase of my aseprite artwork.
 ## PNG Images
 EOF
 
+
 # Find all .png files and append filename + preview
-find . -type f -name "*.png" | sort | while read -r file; do
+find ./png -type f -name "*.png" | sort | while read -r file; do
     clean_path="${file#./}"
     filename=$(basename "$clean_path")
     
