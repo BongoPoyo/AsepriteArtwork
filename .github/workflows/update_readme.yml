@@ -5,7 +5,7 @@ on:
     paths:
       - '**.png'
       - '.github/workflows/update-readme.yml'
-      - 'generate_readme.sh'
+      - 'add_pngs_to_readme.sh'
 
 jobs:
   update-readme:
@@ -16,7 +16,7 @@ jobs:
         uses: actions/checkout@v4
 
       - name: Run README generator
-        run: bash ./generate_readme.sh
+        run: bash ./add_pngs_to_readme.sh
 
       - name: Commit and push changes
         run: |
