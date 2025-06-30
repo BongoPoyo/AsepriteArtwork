@@ -37,7 +37,7 @@ with open(README, "w") as readme:
         image_row = "| " + " | ".join(f"![{name}](./{path})" for name, path in row) + " |\n"
 
         readme.write(filename_row)
-        # readme.write(separator_row)
+        readme.write(separator_row)
         readme.write(image_row)
 
 print("✅ README.md rewritten with PNG filenames and preview grid.")
