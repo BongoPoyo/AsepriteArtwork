@@ -2,6 +2,7 @@
 Consists of .png and .ase of my aseprite artwork.
 
 ## PNG Images
+| Preview | Preview | Preview |
 | --- | --- | --- |
 | `abd-car.png` | `black-magic-image.png` | `bongi.png` |
 | ![abd-car.png](./png/abd-car.png) | ![black-magic-image.png](./png/black-magic-image.png) | ![bongi.png](./png/bongi.png) |
