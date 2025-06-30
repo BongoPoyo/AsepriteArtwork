@@ -24,7 +24,7 @@ while IFS= read -r -d '' file; do
     filename=$(basename "$file")
     # Properly escape special characters in paths
     file_path=$(printf "%q" "$file" | sed "s/'//g")
-    echo -e "<div class=\"grid-item\">\n"***${filename}***"\n<img src=\"${file_path}\" alt=\"${filename}\" width=\"200\">\n</div>"
+    echo -e "<div class=\"grid-item\">\n<img src=\"${file_path}\" alt=\"${filename}\" width=\"200\">\n</div>"
 done < <(find "$PNG_DIR" -type f -name "*.png" -print0 | sort -z) >> "$README"
 
 # Close the grid and add CSS
