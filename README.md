@@ -11,7 +11,7 @@ Consists of .png and .ase of my aseprite artwork.
 <img src="./png/black-magic-image.png" alt="black-magic-image.png" width="200">
 </div>
 <div class="grid-item">
-<img src="./png/bongi\(female-bongo\).png" alt="bongi(female-bongo).png" width="200">
+<img src="./png/bongi.png" alt="bongi.png" width="200">
 </div>
 <div class="grid-item">
 <img src="./png/bongo_badmoshbg4k.png" alt="bongo_badmoshbg4k.png" width="200">
