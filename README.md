@@ -27,6 +27,9 @@ Consists of .png and .ase of my aseprite artwork.
 ### base_human.png
 ![base_human.png](./HealerOfTheBrokenGlass/base_human.png)
 
+### idk-man.png
+![idk-man.png](./idk-man.png)
+
 ### mon-amor-shobz.png
 ![mon-amor-shobz.png](./mon-amor-shobz.png)
 
@@ -47,6 +50,9 @@ Consists of .png and .ase of my aseprite artwork.
 
 ### peela.png
 ![peela.png](./peela.png)
+
+### poyo.png
+![poyo.png](./poyo.png)
 
 ### the-angel-who-sees-all.png
 ![the-angel-who-sees-all.png](./the-angel-who-sees-all.png)
