@@ -43,5 +43,6 @@ with open(README, "w") as readme:
         readme.write(separator_row)
         readme.write(filename_row)
         readme.write(image_row)
+        readme.write("end")
 
 print("✅ README.md updated with fixed alignment for PNG grid.")
