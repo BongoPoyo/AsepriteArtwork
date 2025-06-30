@@ -5,7 +5,7 @@ from textwrap import dedent
 
 README = "README.md"
 PNG_DIR = "png"
-COLUMNS = 3  # Number of columns per row
+COLUMNS = 3  # Images per row
 
 # Header text
 header = dedent("""\
@@ -15,7 +15,7 @@ header = dedent("""\
     ## PNG Images
 """)
 
-# Collect PNG files
+# Gather PNG files
 png_files = []
 for root, _, files in os.walk(PNG_DIR):
     for file in sorted(files):
@@ -23,24 +23,21 @@ for root, _, files in os.walk(PNG_DIR):
             rel_path = os.path.join(root, file).replace("\\", "/")
             png_files.append((file, rel_path))
 
-# Pad the list with None to make rows even
-while len(png_files) % COLUMNS != 0:
-    png_files.append(("", ""))  # empty cell
-
-# Write to README.md
+# Write to README
 with open(README, "w") as readme:
     readme.write(header)
 
+    # Write rows in groups of COLUMNS
     for i in range(0, len(png_files), COLUMNS):
         row = png_files[i:i + COLUMNS]
 
-        # File names
-        filename_row = "| " + " | ".join(f"`{name}`" if name else " " for name, _ in row) + " |\n"
+        # First row: filenames
+        filename_row = "| " + " | ".join(f"`{name}`" for name, _ in row) + " |\n"
         separator_row = "| " + " | ".join("---" for _ in row) + " |\n"
-        image_row = "| " + " | ".join(f"![{name}](./{path})" if name else " " for name, path in row) + " |\n"
+        image_row = "| " + " | ".join(f"![{name}](./{path})" for name, path in row) + " |\n"
 
         readme.write(filename_row)
-       # readme.write(separator_row)
+        # readme.write(separator_row)
         readme.write(image_row)
 
-print("✅ README.md updated with fixed alignment for PNG grid.")
+print("✅ README.md rewritten with PNG filenames and preview grid.")
