@@ -3,9 +3,9 @@
 set -e
 
 
-echo "> python add_pngs_to_readme.py \n"
+echo "> Updating Readme"
 python add_pngs_to_readme.py
-echo "> Pushing to git \n"
+echo "> Pushing to git "
 git add .
 git commit -m "poyo"
 git push
