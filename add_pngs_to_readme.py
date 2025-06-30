@@ -39,8 +39,8 @@ with open(README, "w") as readme:
         separator_row = "| " + " | ".join("---" for _ in row) + " |\n"
         image_row = "| " + " | ".join(f"![{name}](./{path})" if name else " " for name, path in row) + " |\n"
 
-        readme.write(filename_row)
         readme.write(separator_row)
+        readme.write(filename_row)
         readme.write(image_row)
 
 print("✅ README.md updated with fixed alignment for PNG grid.")
