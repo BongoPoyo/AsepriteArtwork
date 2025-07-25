@@ -22,5 +22,5 @@ Consists of .png and .ase of my aseprite artwork.
 | `peela.png` | `poyo.png` | `rust-blazinglyfast.png` |
 | ![peela.png](./png/peela.png) | ![poyo.png](./png/poyo.png) | ![rust-blazinglyfast.png](./png/rust-blazinglyfast.png) |
 | --- | --- | --- |
-| `the-angel-who-sees-all.png` |   |   |
-| ![the-angel-who-sees-all.png](./png/the-angel-who-sees-all.png) |   |   |
+| `the-angel-who-sees-all.png` | `the-lone-flower.png` |   |
+| ![the-angel-who-sees-all.png](./png/the-angel-who-sees-all.png) | ![the-lone-flower.png](./png/the-lone-flower.png) |   |
