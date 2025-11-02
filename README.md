@@ -19,8 +19,11 @@ Consists of .png and .ase of my aseprite artwork.
 | `mr-angry-dude.png` | `neeli-peeli-billi.png` | `nisar-mei-teri-galiyon.png` |
 | ![mr-angry-dude.png](./png/mr-angry-dude.png) | ![neeli-peeli-billi.png](./png/neeli-peeli-billi.png) | ![nisar-mei-teri-galiyon.png](./png/nisar-mei-teri-galiyon.png) |
 | --- | --- | --- |
-| `numas-reality.png` | `peela.png` | `poyo.png` |
-| ![numas-reality.png](./png/numas-reality.png) | ![peela.png](./png/peela.png) | ![poyo.png](./png/poyo.png) |
+| `numas-reality.png` | `peela.png` | `pop-os-logo.png` |
+| ![numas-reality.png](./png/numas-reality.png) | ![peela.png](./png/peela.png) | ![pop-os-logo.png](./png/pop-os-logo.png) |
 | --- | --- | --- |
-| `rust-blazinglyfast.png` | `the-angel-who-sees-all.png` | `the-lone-flower.png` |
-| ![rust-blazinglyfast.png](./png/rust-blazinglyfast.png) | ![the-angel-who-sees-all.png](./png/the-angel-who-sees-all.png) | ![the-lone-flower.png](./png/the-lone-flower.png) |
+| `poyo.png` | `rust-blazinglyfast.png` | `the-angel-who-sees-all.png` |
+| ![poyo.png](./png/poyo.png) | ![rust-blazinglyfast.png](./png/rust-blazinglyfast.png) | ![the-angel-who-sees-all.png](./png/the-angel-who-sees-all.png) |
+| --- | --- | --- |
+| `the-lone-flower.png` |   |   |
+| ![the-lone-flower.png](./png/the-lone-flower.png) |   |   |
