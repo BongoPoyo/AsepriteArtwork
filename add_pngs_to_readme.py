@@ -14,6 +14,7 @@ header = dedent("""\
 
     ## PNG Images
     | Preview | Preview | Preview |
+    | --- | --- | --- |
 """)
 
 # Collect PNG files
@@ -36,11 +37,14 @@ with open(README, "w") as readme:
         row = png_files[i:i + COLUMNS]
 
         # File names
-        filename_row = "| " + " | ".join(f"`{name}`" if name else " " for name, _ in row) + " |\n"
-        separator_row = "| " + " | ".join("---" for _ in row) + " |\n"
-        image_row = "| " + " | ".join(f"![{name}](./{path})" if name else " " for name, path in row) + " |\n"
+        filename_row = "| " + \
+            " | ".join(f"{name}" if name else " " for name, _ in row) + " |\n"
+        # separator_row = "| " + " | ".join("---" for _ in row) + " |\n"
+        image_row = "| " + \
+            " | ".join(
+                f"![{name}](./{path})" if name else " " for name, path in row) + " |\n"
 
-        readme.write(separator_row)
+        # readme.write(separator_row)
         readme.write(filename_row)
         readme.write(image_row)
 
