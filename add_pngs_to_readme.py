@@ -1,4 +1,16 @@
 #!/usr/bin/env python3
+#
+# ⚠️  DEPRECATED ⚠️
+#
+# This script is deprecated and no longer maintained.
+# Please use `generate_gallery.py` instead, which creates a modern
+# interactive gallery website with lightbox, responsive design, and
+# vim-key navigation.
+#
+# The new gallery auto-updates via GitHub Actions when you push
+# new PNGs to the png/ directory - no manual script running needed!
+#
+# ===================================================================
 
 import os
 from textwrap import dedent
