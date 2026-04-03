@@ -2,6 +2,9 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Artwork</title>
     <link rel="icon" href="icon.ico" type="image/x-icon">
@@ -75,52 +78,9 @@ body {
     transform: scale(1.05);
 }
 
-.menu-btn {
-    background: transparent;
-    color: var(--text);
-    border: none;
-    font-size: 1.5rem;
-    cursor: pointer;
-    z-index: 2001;
-    position: relative;
-}
-
-/* Sidebar */
-.side-bar {
-    position: fixed;
-    top: 0;
-    right: 0;
-    width: 250px;
-    height: 100%;
-    background-color: var(--surface);
-    color: var(--text);
-    box-shadow: -3px 0 15px rgba(0,0,0,0.5);
-    display: flex;
-    flex-direction: column;
-    padding: 60px 20px;
-    gap: 20px;
-    transform: translateX(250px);
-    transition: transform 0.3s ease;
-    z-index: 1999;
-}
-
-.side-bar.active {
-    transform: translateX(0);
-}
-
-.side-bar p {
-    text-align: left;
-    font-size: 0.9rem;
-}
-
 /* Main Content */
 .main-content {
     transition: transform 0.3s ease;
-}
-
-body.side-bar-open .main-content {
-    margin-right: 250px;
-    transition: margin-right 0.3s ease;
 }
 
 /* Header */
@@ -426,12 +386,6 @@ h1 {
 <body>
     <div class="top-bar">
         <a href="https://bongopoyo.github.io/" class="logo">[Bongo Poyo]</a>
-        <button class="menu-btn">☰</button>
-    </div>
-
-    <div class="side-bar">
-        <p>My Aseprite artwork collection 🎨</p>
-        <p>Generated automatically from the png/ folder</p>
     </div>
 
     <div class="main-content">
@@ -740,24 +694,6 @@ function getGridColumns() {
     if (width >= 769) return 3;
     return 1;
 }
-
-// Menu functionality
-const menuBtn = document.querySelector('.menu-btn');
-const sidebar = document.querySelector('.side-bar');
-const body = document.body;
-
-menuBtn.addEventListener('click', () => {
-    sidebar.classList.toggle('active');
-    body.classList.toggle('side-bar-open');
-});
-
-// Close sidebar if clicking outside
-body.addEventListener('click', (e) => {
-    if (!sidebar.contains(e.target) && !menuBtn.contains(e.target)) {
-        sidebar.classList.remove('active');
-        body.classList.remove('side-bar-open');
-    }
-});
 
 // Lazy load images
 document.addEventListener('DOMContentLoaded', () => {
