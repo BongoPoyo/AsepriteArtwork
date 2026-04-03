@@ -8,7 +8,7 @@ import os
 from pathlib import Path
 
 PNG_DIR = Path("png")
-OUTPUT_FILE = Path("docs/index.html")
+OUTPUT_FILE = Path("index.html")
 GITHUB_REPO = "https://github.com/BongoPoyo/AsepriteArtwork"
 MAIN_SITE = "https://bongopoyo.github.io/"
 
