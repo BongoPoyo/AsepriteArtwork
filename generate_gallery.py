@@ -571,7 +571,7 @@ HTML_TEMPLATE = """<!DOCTYPE html>
 </head>
 <body>
     <div class="top-bar">
-        <a href="#" class="logo">[Aseprite Artwork]</a>
+        <a href="{main_site}" class="logo">[Bongo Poyo]</a>
         <button class="menu-btn">☰</button>
     </div>
 
