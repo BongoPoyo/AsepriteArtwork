@@ -75,6 +75,7 @@ body {{
     text-decoration: none;
     z-index: 2001;
     position: relative;
+    margin-right: 20px;
 }}
 
 .logo:hover {{
@@ -648,9 +649,11 @@ def collect_images():
         for filename in sorted(files):
             if filename.lower().endswith('.png'):
                 filepath = Path(root) / filename
-                rel_path = filepath.relative_to(PNG_DIR.parent)
-                # Prepend ../ since HTML is in docs/ folder
-                rel_path = Path('..') / rel_path
+                # Get path relative to png/ directory
+                rel_path = filepath.relative_to(PNG_DIR)
+                # For GitHub Pages with /docs source, the repo root is the site root
+                # So png/ is accessible directly as png/ from the docs folder
+                rel_path = Path('png') / rel_path
 
                 try:
                     from PIL import Image
