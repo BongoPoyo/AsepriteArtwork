@@ -11,7 +11,9 @@ PNG_DIR = Path("png")
 OUTPUT_FILE = Path("index.html")
 GITHUB_REPO = "https://github.com/BongoPoyo/Artwork"
 MAIN_SITE = "https://bongopoyo.github.io/"
-
+SHOWCASE_DIR = Path("showcase")
+PNG_DIR = Path("png")
+SUPPORTED_EXTENSIONS = ('.png', '.jpg', '.jpeg', '.webp')
 # Catppuccin theme colors from user's site
 CSS = f"""
 :root {{
@@ -134,7 +136,7 @@ h1 {{
     grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
     gap: 24px;
     max-width: 1600px;
-    margin: 0 auto;
+    margin: 0 auto 60px auto;
     padding: 20px;
 }}
 
@@ -195,6 +197,20 @@ h1 {{
     font-size: 0.8rem;
     color: var(--muted);
     font-family: "Fira Code", monospace;
+}}
+
+.section-title {{
+    text-align: center;
+    color: var(--accent);
+    font-size: 2rem;
+    margin: 40px 0 20px;
+    font-weight: 600;
+}}
+.section-title::before,
+.section-title::after {{
+    content: "-";
+    margin: 0 10px;
+    color: var(--accent);   
 }}
 
 /* Lightbox */
@@ -384,6 +400,8 @@ h1 {{
         grid-template-columns: repeat(5, 1fr);
     }}
 }}
+
+
 """
 
 JAVASCRIPT = """
@@ -563,7 +581,23 @@ HTML_TEMPLATE = """<!DOCTYPE html>
 </body>
 </html>
 """
+def get_images(directory: Path):
+    """Return sorted list of PNG files in a directory."""
+    if not directory.exists():
+        return []
 
+    return sorted([
+        f for f in directory.iterdir()
+        if f.suffix.lower() == ".png"
+    ])
+
+
+def render_images(images, base_path):
+    """Convert image list to HTML <img> tags."""
+    html = ""
+    for img in images:
+        html += f'<img src="{base_path}/{img.name}" loading="lazy">\n'
+    return html
 
 def format_size(bytes_size):
     """Format file size in human-readable format."""
@@ -582,71 +616,181 @@ def collect_images():
         print(f"⚠️  Warning: {PNG_DIR} directory not found")
         return images
 
-    for root, dirs, files in os.walk(PNG_DIR):
-        for filename in sorted(files):
-            if filename.lower().endswith('.png'):
-                filepath = Path(root) / filename
-                # Get path relative to png/ directory
-                rel_path = filepath.relative_to(PNG_DIR)
-                # For GitHub Pages with /docs source, the repo root is the site root
-                # So png/ is accessible directly as png/ from the docs folder
-                rel_path = Path('png') / rel_path
+    for base_dir in [SHOWCASE_DIR, PNG_DIR]:
+        if not base_dir.exists():
+            continue
+        
+        for root, dirs, files in os.walk(base_dir):
+            for filename in sorted(files):
+                if filename.lower().endswith(SUPPORTED_EXTENSIONS):
+                    filepath = Path(root) / filename
+                    # Get path relative to png/ directory
+                    rel_path = filepath.relative_to(base_dir)
 
-                try:
-                    from PIL import Image
-                    with Image.open(filepath) as img:
-                        width, height = img.size
-                except Exception as e:
-                    print(f"⚠️  Warning: Could not read {filepath}: {e}")
-                    continue
+                    if base_dir == SHOWCASE_DIR:
+                        rel_path = Path('showcase') / rel_path
+                    else:
+                        rel_path = Path('png') / rel_path
 
-                file_size = filepath.stat().st_size
+                    try:
+                        from PIL import Image
+                        with Image.open(filepath) as img:
+                            width, height = img.size
+                    except Exception as e:
+                        print(f"⚠️  Warning: Could not read {filepath}: {e}")
+                        continue
 
-                images.append({
-                    'filename': filename,
-                    'path': str(rel_path),
-                    'width': width,
-                    'height': height,
-                    'size': format_size(file_size)
-                })
+                    file_size = filepath.stat().st_size
+
+                    images.append({
+                        'filename': filename,
+                        'path': str(rel_path),
+                        'width': width,
+                        'height': height,
+                        'size': format_size(file_size)
+                    })
 
     return images
 
 
-def generate_gallery_html(images):
-    """Generate HTML for image gallery."""
-    if not images:
-        return '<div class="no-images">No images found in png/ directory</div>'
+# def generate_gallery_html(images):
+#     """Generate HTML for image gallery."""
+#     if not images:
+#         return '<div class="no-images">No images found in png/ directory</div>'
 
-    gallery_items = []
-    for i, img in enumerate(images):
-        gallery_items.append(f'''        <div class="image-card" onclick="openLightbox({i})">
-            <img class="thumbnail" data-src="{img['path']}" alt="{img['filename']}" loading="lazy">
+#     gallery_items = []
+#     for i, img in enumerate(images):
+#         gallery_items.append(f'''        <div class="image-card" onclick="openLightbox({i})">
+#             <img class="thumbnail" data-src="{img['path']}" alt="{img['filename']}" loading="lazy">
+#             <div class="image-info">
+#                 <div class="filename" title="{img['filename']}">{img['filename']}</div>
+#                 <div class="metadata">{img['width']} × {img['height']} • {img['size']}</div>
+#             </div>
+#         </div>''')
+
+#     return '<div class="gallery">\n' + '\n'.join(gallery_items) + '\n    </div>'
+def generate_gallery_html(showcase_images, other_images):
+    """Generate HTML for two-section gallery."""
+
+    html = ""
+
+    if showcase_images:
+        html += '<h1 class="section-title">Showcase</h1>\n'
+        html += '<div class="gallery">\n'
+
+        for i, img in enumerate(showcase_images):
+            html += f'''        <div class="image-card" onclick="openLightbox({i})">
+            <img class="thumbnail" data-src="{img['path']}" alt="{img['filename']}">
             <div class="image-info">
                 <div class="filename" title="{img['filename']}">{img['filename']}</div>
                 <div class="metadata">{img['width']} × {img['height']} • {img['size']}</div>
             </div>
-        </div>''')
+        </div>\n'''
 
-    return '<div class="gallery">\n' + '\n'.join(gallery_items) + '\n    </div>'
+        html += '    </div>\n\n'
 
+    if other_images: 
+        offset = len(showcase_images)
 
+        html += '<h1 class="section-title">Other Artwork</h1>\n'
+        html += '<div class="gallery">\n'
+
+        for i, img in enumerate(other_images):
+            html += f'''        <div class="image-card" onclick="openLightbox({i + offset})">
+            <img class="thumbnail" data-src="{img['path']}" alt="{img['filename']}">
+            <div class="image-info">
+                <div class="filename" title="{img['filename']}">{img['filename']}</div>
+                <div class="metadata">{img['width']} × {img['height']} • {img['size']}</div>
+            </div>
+        </div>\n'''
+
+        html += '    </div>\n'
+
+    return html
+
+# def main():
+    
+#     """Generate the gallery HTML."""
+#     print("🎨 Generating Artwork Gallery...")
+
+#     all_images = collect_images()
+
+#     showcase_images = []
+#     other_images = []
+
+#     showcase_filenames = set()
+    
+#     for img in all_images:
+#         if img['path'].startswith('showcase/'):
+#             showcase_images.append(img)
+#             showcase_filenames.add(img['filename'])
+    
+#     # add png images that are not in showcase
+#     for img in all_images:
+#         if img['path'].startswith('png/') and img['filename'] not in showcase_filenames:
+#             other_images.append(img)
+
+#     # Create docs directory if it doesn't exist
+
+#     OUTPUT_FILE.parent.mkdir(exist_ok=True)
+
+#     # Collect images
+#     images = collect_images()
+#     print(f"📸 Found {len(images)} images")
+
+#     image_data = showcase_images + other_images
+#     # Generate gallery HTML
+#     gallery_html = generate_gallery_html(showcase_images, other_images)
+
+#     # Prepare JavaScript with image data
+#     js_data = str(image_data).replace("'", '"')
+#     javascript = JAVASCRIPT.replace('__IMAGE_DATA__', js_data)
+
+#     # Generate full HTML
+#     html_content = HTML_TEMPLATE.format(
+#         css=CSS,
+#         gallery=gallery_html,
+#         javascript=javascript,
+#         main_site=MAIN_SITE,
+#         github_repo=GITHUB_REPO
+#     )
+
+#     # Write to file
+#     OUTPUT_FILE.write_text(html_content)
+#     print(f"✅ Generated {OUTPUT_FILE} with {len(images)} images")
 def main():
     """Generate the gallery HTML."""
     print("🎨 Generating Artwork Gallery...")
 
+    all_images = collect_images()
+    print(f"📸 Found {len(all_images)} images")
+
+    showcase_images = []
+    other_images = []
+    showcase_filenames = set()
+
+    # Separate showcase images
+    for img in all_images:
+        if img['path'].startswith('showcase/'):
+            showcase_images.append(img)
+            showcase_filenames.add(img['filename'])
+
+    # Add PNG images not in showcase
+    for img in all_images:
+        if img['path'].startswith('png/') and img['filename'] not in showcase_filenames:
+            other_images.append(img)
+
     # Create docs directory if it doesn't exist
     OUTPUT_FILE.parent.mkdir(exist_ok=True)
 
-    # Collect images
-    images = collect_images()
-    print(f"📸 Found {len(images)} images")
+    # Combine for JS imageData (important: same order as gallery)
+    image_data = showcase_images + other_images
 
     # Generate gallery HTML
-    gallery_html = generate_gallery_html(images)
+    gallery_html = generate_gallery_html(showcase_images, other_images)
 
     # Prepare JavaScript with image data
-    js_data = str(images).replace("'", '"')
+    js_data = str(image_data).replace("'", '"')
     javascript = JAVASCRIPT.replace('__IMAGE_DATA__', js_data)
 
     # Generate full HTML
@@ -660,8 +804,7 @@ def main():
 
     # Write to file
     OUTPUT_FILE.write_text(html_content)
-    print(f"✅ Generated {OUTPUT_FILE} with {len(images)} images")
-
+    print(f"✅ Generated {OUTPUT_FILE} with {len(all_images)} images")
 
 if __name__ == '__main__':
     main()
