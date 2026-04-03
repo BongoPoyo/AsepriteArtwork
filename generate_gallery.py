@@ -429,6 +429,14 @@ const imageData = __IMAGE_DATA__;
 
 let currentIndex = 0;
 
+// Get current grid column count based on window width
+function getGridColumns() {
+    const width = window.innerWidth;
+    if (width >= 1200) return 5;
+    if (width >= 769) return 3;
+    return 1;
+}
+
 // Menu functionality
 const menuBtn = document.querySelector('.menu-btn');
 const sidebar = document.querySelector('.side-bar');
@@ -523,13 +531,13 @@ document.addEventListener('keydown', (e) => {
             break;
         case 'ArrowUp':
         case 'k':
-            // Navigate up by row (5 columns on desktop)
-            navigate(-5);
+            // Navigate up by row (adapts to current grid size)
+            navigate(-getGridColumns());
             break;
         case 'ArrowDown':
         case 'j':
-            // Navigate down by row
-            navigate(5);
+            // Navigate down by row (adapts to current grid size)
+            navigate(getGridColumns());
             break;
         case 'q':
         case 'Escape':
