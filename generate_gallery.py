@@ -566,6 +566,7 @@ HTML_TEMPLATE = """<!DOCTYPE html>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Aseprite Artwork</title>
+    <link rel="icon" href="icon.ico" type="image/x-icon">
     <style>
 {css}
     </style>
