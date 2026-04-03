@@ -9,7 +9,7 @@ from pathlib import Path
 
 PNG_DIR = Path("png")
 OUTPUT_FILE = Path("index.html")
-GITHUB_REPO = "https://github.com/BongoPoyo/AsepriteArtwork"
+GITHUB_REPO = "https://github.com/BongoPoyo/Artwork"
 MAIN_SITE = "https://bongopoyo.github.io/"
 
 # Catppuccin theme colors from user's site
@@ -565,7 +565,7 @@ HTML_TEMPLATE = """<!DOCTYPE html>
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Aseprite Artwork</title>
+    <title>Artwork</title>
     <link rel="icon" href="icon.ico" type="image/x-icon">
     <style>
 {css}
@@ -584,7 +584,7 @@ HTML_TEMPLATE = """<!DOCTYPE html>
 
     <div class="main-content">
         <div class="header-content">
-            <h1>Aseprite Artwork</h1>
+            <h1>Artwork</h1>
             <p class="description">Consists of .png and .ase of my aseprite artwork</p>
             <div class="links">
                 <a href="{main_site}" target="_blank">Main Website</a>
@@ -697,7 +697,7 @@ def generate_gallery_html(images):
 
 def main():
     """Generate the gallery HTML."""
-    print("🎨 Generating Aseprite Artwork Gallery...")
+    print("🎨 Generating Artwork Gallery...")
 
     # Create docs directory if it doesn't exist
     OUTPUT_FILE.parent.mkdir(exist_ok=True)
