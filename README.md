@@ -1,9 +1,28 @@
 <div align="center">
-  
+
 # Aseprite Artwork
 Consists of .png and .ase of my aseprite artwork.
 
-  
+## 🎨 Online Gallery
+Check out the **[interactive artwork gallery](https://bongopoyo.github.io/AsepriteArtwork/)** featuring:
+- Responsive grid layout (desktop, tablet, mobile)
+- Lightbox view with vim-key navigation (hjkl + arrows + q)
+- Lazy loading for fast performance
+- Catppuccin theme matching the main site
+
+### Adding New Artwork
+Simply add PNG files to the `png/` directory and push to GitHub. The gallery automatically updates via GitHub Actions!
+
+### Local Development
+```bash
+# Generate the gallery
+python3 generate_gallery.py
+
+# Preview locally
+python3 -m http.server 8000
+# Visit http://localhost:8000/docs/
+```
+
 <a href="https://codeberg.org/BongoPoyo/AsepriteArtwork">
     <img alt="Get it on Codeberg" src="https://get-it-on.codeberg.org/get-it-on-blue-on-white.png" height="60">
 </a>
