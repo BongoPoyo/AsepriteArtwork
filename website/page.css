@@ -220,7 +220,15 @@ h1 {
 .section-title::after {
     content: "-";
     margin: 0 10px;
-    color: var(--accent);   
+    color: var(--accent);
+}
+
+.empty-state {
+    text-align: center;
+    color: var(--muted);
+    padding: 40px 20px;
+    font-style: italic;
+    font-size: 1.1rem;
 }
 
 /* Lightbox */
