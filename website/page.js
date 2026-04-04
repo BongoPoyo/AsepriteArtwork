@@ -113,10 +113,9 @@ function trapFocus() {
 document.addEventListener('keydown', (e) => {
     const lightbox = document.getElementById('lightbox');
 
-    // If lightbox isn't active, open first image on any key press
+    // Only handle keys when lightbox is active
     if (!lightbox.classList.contains('active')) {
-        openLightbox(0);
-        return; // stop processing this key
+        return;
     }
 
     // Lightbox is active → handle navigation
