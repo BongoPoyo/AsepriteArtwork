@@ -96,6 +96,28 @@ body {
     transform: scale(1.05);
 }
 
+.section-nav {
+    display: flex;
+    gap: 15px;
+}
+
+.nav-button {
+    font-size: 24px;
+    font-weight: bold;
+    color: var(--text);
+    text-decoration: none;
+    transition: color 0.2s, transform 0.2s;
+}
+
+.nav-button:hover {
+    color: var(--accent);
+    transform: scale(1.05);
+}
+
+.logo-large {
+    font-size: 32px;
+}
+
 .main-content {
     transition: transform 0.3s ease;
 }
