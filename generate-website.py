@@ -105,7 +105,7 @@ def generate_gallery_html(showcase_images, other_images, gif_images):
         html += '<div class="gallery">\n'
 
         for i, img in enumerate(showcase_images):
-            html += f'''        <div class="image-card" tabindex="0" role="button" aria-label="View {img['filename']}" onclick="openLightbox({i})">
+            html += f'''        <div class="image-card" tabindex="0" role="button" aria-label="View {img['filename']}" onclick="openLightbox({i})" onkeydown="if(event.key==='Enter') openLightbox({i})">
             <img class="thumbnail" data-src="{img['path']}" alt="{img['filename']}">
             <div class="image-info">
                 <div class="filename" title="{img['filename']}">{img['filename']}</div>
@@ -126,7 +126,7 @@ def generate_gallery_html(showcase_images, other_images, gif_images):
         html += '<div class="gallery">\n'
 
         for i, img in enumerate(other_images):
-            html += f'''        <div class="image-card" tabindex="0" role="button" aria-label="View {img['filename']}" onclick="openLightbox({i + offset})">
+            html += f'''        <div class="image-card" tabindex="0" role="button" aria-label="View {img['filename']}" onclick="openLightbox({i + offset})" onkeydown="if(event.key==='Enter') openLightbox({i + offset})">
             <img class="thumbnail" data-src="{img['path']}" alt="{img['filename']}">
             <div class="image-info">
                 <div class="filename" title="{img['filename']}">{img['filename']}</div>
@@ -147,7 +147,7 @@ def generate_gallery_html(showcase_images, other_images, gif_images):
         html += '<div class="gallery">\n'
 
         for i, img in enumerate(gif_images):
-            html += f'''        <div class="image-card" tabindex="0" role="button" aria-label="View {img['filename']}" onclick="openLightbox({i + offset})">
+            html += f'''        <div class="image-card" tabindex="0" role="button" aria-label="View {img['filename']}" onclick="openLightbox({i + offset})" onkeydown="if(event.key==='Enter') openLightbox({i + offset})">
             <img class="thumbnail" data-src="{img['path']}" alt="{img['filename']}">
             <div class="image-info">
                 <div class="filename" title="{img['filename']}">{img['filename']}</div>
