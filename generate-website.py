@@ -21,17 +21,6 @@ MAIN_SITE = "https://bongopoyo.github.io/"
 
 SUPPORTED_EXTENSIONS = ('.png', '.jpg', '.jpeg', '.webp', '.gif')
 
-# def get_images(directory: Path):
-#     """Return sorted list of PNG files in a directory."""
-#     if not directory.exists():
-#         return []
-
-#     return sorted([
-#         f for f in directory.iterdir()
-#         if f.suffix.lower() == ".png"
-#     ])
-
-
 def render_images(images, base_path):
     """Convert image list to HTML <img> tags."""
     html = ""
@@ -101,7 +90,7 @@ def generate_gallery_html(showcase_images, other_images, gif_images):
 
     # Artwork section
     if showcase_images:
-        html += '<h1 id="showcase" class="section-title">Artwork</h1>\n'
+        html += '<h1 id="showcase" class="section-title">Showcase</h1>\n'
         html += '<div class="gallery">\n'
 
         for i, img in enumerate(showcase_images):
@@ -115,7 +104,7 @@ def generate_gallery_html(showcase_images, other_images, gif_images):
 
         html += '    </div>\n\n'
     else:
-        html += '<h1 id="showcase" class="section-title">Artwork</h1>\n'
+        html += '<h1 id="showcase" class="section-title">Showcase</h1>\n'
         html += '<p class="empty-state">No artwork yet.</p>\n\n'
 
     # Other Artwork section
@@ -175,9 +164,9 @@ def render_template(template: str, context: dict):
 
 def generate_navigation_buttons():
     """Generate HTML for section navigation buttons."""
-    return '''        <a href="#showcase" class="nav-button">Artwork</a>
-        <a href="#other" class="nav-button">Other Artwork</a>
-        <a href="#gifs" class="nav-button">Gifs</a>'''
+    return '''        <a href="#showcase" class="nav-button">[Showcase]</a>
+        <a href="#other" class="nav-button">[Other Artwork]</a>
+        <a href="#gifs" class="nav-button">[Gifs]</a>'''
 
 def main():
     print("🎨 Generating Artwork Gallery...")
