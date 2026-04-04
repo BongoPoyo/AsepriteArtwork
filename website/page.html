@@ -9,12 +9,16 @@
     <title>Artwork</title>
 </head>
 <body>
+    <a href="#main-content" class="skip-link">Skip to content</a>
 
 <div class="top-bar">
-    <a href="{{main_site}}" class="logo">[Back]</a>
+    <a href="{{main_site}}" class="logo logo-large">[Back]</a>
+    <nav class="section-nav">
+        {{navigation_buttons}}
+    </nav>
 </div>
 
-<div class="main-content">
+<div class="main-content" id="main-content">
     <div class="header-content">
         <h1>Artwork</h1>
         <div class="links">
@@ -36,9 +40,9 @@
 <!-- using website/page.js instead of page.js cause the output file be at root -->
 <script src="website/page.js"></script>
 
-<div id="lightbox" class="lightbox">
+<div id="lightbox" class="lightbox" role="dialog" aria-modal="true" aria-label="Image viewer">
     <div class="lightbox-content">
-        <button class="close-btn" onclick="closeLightbox()">&times;</button>
+        <button class="close-btn" onclick="closeLightbox()" aria-label="Close lightbox">&times;</button>
         <img id="lightbox-image" class="lightbox-image" src="" alt="">
         <div class="lightbox-info">
             <div id="lightbox-filename" class="lightbox-filename"></div>
