@@ -2,420 +2,29 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+
+    <!-- using website/page.css instead of page.css cause the output file be at root -->
+    <link rel="stylesheet" href="website/page.css"> 
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Artwork</title>
-    <link rel="icon" href="icon.ico" type="image/x-icon">
-    <style>
-
-:root {
-    --background: #1e1e2e;
-    --surface: #313244;
-    --text: #cdd6f4;
-    --accent: #f5c2e7;
-    --accent-hover: #f8a1f1;
-    --shadow: rgba(0, 0, 0, 0.5);
-    --darker-bg: #181825;
-    --muted: #7f849c;
-    --card-hover: #3b3b5a;
-    --bottom-bg: #11111b;
-}
-
-*, *::before, *::after {
-    box-sizing: border-box;
-    color: var(--text);
-}
-
-* {
-    margin: 0;
-    padding: 0;
-}
-
-html {
-    scrollbar-gutter: stable both-edges;
-}
-
-body {
-    font-family: "Segoe UI", "Fira Code", monospace;
-    background-color: var(--background);
-    color: var(--text);
-    min-height: 100vh;
-    padding: 80px 20px 100px 20px;
-}
-
-/* Top Bar */
-.top-bar {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    background-color: var(--darker-bg);
-    color: var(--text);
-    padding: 12px 24px;
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    width: 100%;
-    box-shadow: 0 2px 4px #7f849c;
-    z-index: 2000;
-    transition: background 0.3s;
-}
-
-.logo {
-    font-size: 24px;
-    font-weight: bold;
-    color: var(--accent);
-    transition: ease-in 0.2s;
-    text-decoration: none;
-    z-index: 2001;
-    position: relative;
-    margin-right: 20px;
-}
-
-.logo:hover {
-    transform: scale(1.05);
-}
-
-/* Main Content */
-.main-content {
-    transition: transform 0.3s ease;
-}
-
-/* Header */
-.header-content {
-    text-align: center;
-    margin-bottom: 40px;
-    padding: 20px;
-}
-
-h1 {
-    color: var(--accent);
-    font-size: 2.5rem;
-    margin-bottom: 10px;
-    margin-top: 0;
-}
-
-.description {
-    color: var(--muted);
-    font-size: 1.1rem;
-    margin-bottom: 20px;
-}
-
-.links {
-    display: flex;
-    justify-content: center;
-    gap: 20px;
-    flex-wrap: wrap;
-}
-
-.links a {
-    color: var(--text);
-    text-decoration: none;
-    padding: 8px 16px;
-    border-radius: 8px;
-    background-color: var(--surface);
-    transition: background-color 0.2s, color 0.2s;
-}
-
-.links a:hover {
-    background-color: var(--card-hover);
-    color: var(--accent);
-}
-
-/* Gallery */
-.gallery {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-    gap: 24px;
-    max-width: 1600px;
-    margin: 0 auto 60px auto;
-    padding: 20px;
-}
-
-.image-card {
-    background-color: var(--surface);
-    border-radius: 12px;
-    padding: 16px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    cursor: pointer;
-    transition: transform 0.25s ease, box-shadow 0.25s ease;
-}
-
-.image-card:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 10px 30px var(--shadow);
-}
-
-.image-card:hover .thumbnail {
-    transform: scale(1.05);
-    box-shadow: 0 0 20px var(--accent);
-}
-
-.thumbnail {
-    width: 250px;
-    height: 250px;
-    object-fit: contain;
-    border-radius: 8px;
-    transition: transform 0.25s ease, box-shadow 0.25s ease;
-    background-color: var(--darker-bg);
-}
-
-.image-info {
-    margin-top: 12px;
-    text-align: center;
-    width: 100%;
-}
-
-.filename {
-    font-size: 0.95rem;
-    font-weight: 600;
-    color: var(--text);
-    margin-bottom: 4px;
-    word-break: break-word;
-    max-width: 100%;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-}
-
-.filename:hover {
-    overflow: visible;
-    white-space: normal;
-}
-
-.metadata {
-    font-size: 0.8rem;
-    color: var(--muted);
-    font-family: "Fira Code", monospace;
-}
-
-.section-title {
-    text-align: center;
-    color: var(--accent);
-    font-size: 2rem;
-    margin: 40px 0 20px;
-    font-weight: 600;
-}
-.section-title::before,
-.section-title::after {
-    content: "-";
-    margin: 0 10px;
-    color: var(--accent);   
-}
-
-/* Lightbox */
-.lightbox {
-    display: none;
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0, 0, 0, 0.9);
-    z-index: 9999;
-    justify-content: center;
-    align-items: center;
-    opacity: 0;
-    transition: opacity 0.2s ease;
-}
-
-.lightbox.active {
-    display: flex;
-    opacity: 1;
-}
-
-.lightbox-content {
-    position: relative;
-    max-width: 90%;
-    max-height: 90%;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-}
-
-.lightbox-image {
-    max-width: 100%;
-    max-height: 85vh;
-    object-fit: contain;
-    border-radius: 8px;
-}
-
-.lightbox-info {
-    margin-top: 16px;
-    text-align: center;
-    color: var(--text);
-}
-
-.lightbox-filename {
-    font-size: 1.2rem;
-    font-weight: 600;
-    margin-bottom: 8px;
-}
-
-.lightbox-metadata {
-    font-size: 0.9rem;
-    color: var(--muted);
-    font-family: "Fira Code", monospace;
-}
-
-.close-btn {
-    position: absolute;
-    top: -40px;
-    right: 0;
-    background: none;
-    border: none;
-    color: var(--text);
-    font-size: 2rem;
-    cursor: pointer;
-    padding: 8px;
-    line-height: 1;
-    transition: color 0.2s;
-}
-
-.close-btn:hover {
-    color: var(--accent);
-}
-
-.no-images {
-    text-align: center;
-    color: var(--muted);
-    font-size: 1.5rem;
-    padding: 60px 20px;
-}
-
-/* Bottom Bar */
-.bottom-bar {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    background-color: var(--bottom-bg);
-    color: var(--text);
-    padding: 12px 12px;
-    position: fixed;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    box-shadow: none;
-    flex-wrap: wrap;
-    gap: 8px 16px;
-    z-index: 1001;
-    transition: background 0.3s;
-    text-align: center;
-}
-
-.socials {
-    display: flex;
-    margin: 0 auto;
-    flex-wrap: wrap;
-    gap: 8px 16px;
-    justify-content: center;
-    align-items: center;
-    text-align: center;
-}
-
-.socials a {
-    color: var(--muted);
-    font-size: 20px;
-    text-decoration: none;
-    transition: color 0.2s ease, transform 0.15s ease;
-}
-
-.socials a[href*="youtube"]:hover   { color: #f38ba8; }
-.socials a[href*="github"]:hover    { color: #cdd6f4; }
-.socials a[href*="itch"]:hover      { color: #fab387; }
-.socials a[href*="mastodon"]:hover  { color: #89b4fa; }
-.socials a[href*="bsky"]:hover      { color: #89dceb; }
-.socials a[href*="matrix"]:hover    { color: #a6e3a1; }
-.socials a[href*="mailto"]:hover    { color: #eba0ac; }
-.socials a[href*="discord"]:hover   { color: #74c7ec; }
-
-.socials a:hover {
-    color: var(--text);
-    transform: translateY(-2px);
-    text-decoration-line: underline;
-}
-
-/* Mobile responsive */
-@media (max-width: 768px) {
-    body {
-        padding: 80px 10px 120px 10px;
-    }
-
-    .gallery {
-        grid-template-columns: 1fr;
-        padding: 10px;
-    }
-
-    h1 {
-        font-size: 2rem;
-    }
-
-    .description {
-        font-size: 1rem;
-    }
-
-    .links {
-        flex-direction: column;
-        align-items: center;
-    }
-
-    .thumbnail {
-        width: 100%;
-        max-width: 350px;
-        height: auto;
-        aspect-ratio: 1;
-    }
-
-    .bottom-bar {
-        padding: 16px 8px;
-    }
-
-    .socials {
-        gap: 6px 12px;
-    }
-
-    .socials a {
-        font-size: 16px;
-    }
-}
-
-@media (min-width: 769px) and (max-width: 1199px) {
-    .gallery {
-        grid-template-columns: repeat(3, 1fr);
-    }
-}
-
-@media (min-width: 1200px) {
-    .gallery {
-        grid-template-columns: repeat(5, 1fr);
-    }
-}
-
-
-
-    </style>
 </head>
 <body>
-    <div class="top-bar">
-        <a href="https://bongopoyo.github.io/" class="logo">[Bongo Poyo]</a>
+
+<div class="top-bar">
+    <a href="https://bongopoyo.github.io/" class="logo">[Back]</a>
+</div>
+
+<div class="main-content">
+    <div class="header-content">
+        <h1>Artwork</h1>
+        <div class="links">
+            <a href="https://bongopoyo.github.io/" target="_blank">Main Website</a>
+            <a href="https://github.com/BongoPoyo/Artwork" target="_blank">GitHub Repo</a>
+        </div>
     </div>
 
-    <div class="main-content">
-        <div class="header-content">
-            <h1>Artwork</h1>
-            <p class="description">Consists of .png and .ase of my aseprite artwork</p>
-            <div class="links">
-                <a href="https://bongopoyo.github.io/" target="_blank">Main Website</a>
-                <a href="https://github.com/BongoPoyo/Artwork" target="_blank">GitHub Repo</a>
-            </div>
-        </div>
-
-        <main>
-<h1 class="section-title">Showcase</h1>
+    <main>
+        <h1 class="section-title">Showcase</h1>
 <div class="gallery">
         <div class="image-card" onclick="openLightbox(0)">
             <img class="thumbnail" data-src="showcase/black-magic-image.png" alt="black-magic-image.png">
@@ -446,6 +55,13 @@ h1 {
             </div>
         </div>
         <div class="image-card" onclick="openLightbox(4)">
+            <img class="thumbnail" data-src="showcase/voices-in-my-head.png" alt="voices-in-my-head.png">
+            <div class="image-info">
+                <div class="filename" title="voices-in-my-head.png">voices-in-my-head.png</div>
+                <div class="metadata">2048 × 2048 • 22.8 KB</div>
+            </div>
+        </div>
+        <div class="image-card" onclick="openLightbox(5)">
             <img class="thumbnail" data-src="showcase/white-lily.jpg" alt="white-lily.jpg">
             <div class="image-info">
                 <div class="filename" title="white-lily.jpg">white-lily.jpg</div>
@@ -456,372 +72,246 @@ h1 {
 
 <h1 class="section-title">Other Artwork</h1>
 <div class="gallery">
-        <div class="image-card" onclick="openLightbox(5)">
+        <div class="image-card" onclick="openLightbox(6)">
             <img class="thumbnail" data-src="png/abd-car.png" alt="abd-car.png">
             <div class="image-info">
                 <div class="filename" title="abd-car.png">abd-car.png</div>
                 <div class="metadata">4096 × 4096 • 77.6 KB</div>
             </div>
         </div>
-        <div class="image-card" onclick="openLightbox(6)">
+        <div class="image-card" onclick="openLightbox(7)">
             <img class="thumbnail" data-src="png/abdrmn.png" alt="abdrmn.png">
             <div class="image-info">
                 <div class="filename" title="abdrmn.png">abdrmn.png</div>
                 <div class="metadata">4096 × 4096 • 76.0 KB</div>
             </div>
         </div>
-        <div class="image-card" onclick="openLightbox(7)">
+        <div class="image-card" onclick="openLightbox(8)">
             <img class="thumbnail" data-src="png/arch-logo.png" alt="arch-logo.png">
             <div class="image-info">
                 <div class="filename" title="arch-logo.png">arch-logo.png</div>
                 <div class="metadata">512 × 512 • 2.8 KB</div>
             </div>
         </div>
-        <div class="image-card" onclick="openLightbox(8)">
+        <div class="image-card" onclick="openLightbox(9)">
             <img class="thumbnail" data-src="png/bongo-pfp.png" alt="bongo-pfp.png">
             <div class="image-info">
                 <div class="filename" title="bongo-pfp.png">bongo-pfp.png</div>
                 <div class="metadata">3072 × 4080 • 8.2 MB</div>
             </div>
         </div>
-        <div class="image-card" onclick="openLightbox(9)">
+        <div class="image-card" onclick="openLightbox(10)">
             <img class="thumbnail" data-src="png/bongo_badmoshbg4k.png" alt="bongo_badmoshbg4k.png">
             <div class="image-info">
                 <div class="filename" title="bongo_badmoshbg4k.png">bongo_badmoshbg4k.png</div>
                 <div class="metadata">4096 × 4096 • 75.8 KB</div>
             </div>
         </div>
-        <div class="image-card" onclick="openLightbox(10)">
+        <div class="image-card" onclick="openLightbox(11)">
             <img class="thumbnail" data-src="png/bongo_khilafa4k.png" alt="bongo_khilafa4k.png">
             <div class="image-info">
                 <div class="filename" title="bongo_khilafa4k.png">bongo_khilafa4k.png</div>
                 <div class="metadata">4096 × 4096 • 75.5 KB</div>
             </div>
         </div>
-        <div class="image-card" onclick="openLightbox(11)">
+        <div class="image-card" onclick="openLightbox(12)">
             <img class="thumbnail" data-src="png/catppuccin-flower.png" alt="catppuccin-flower.png">
             <div class="image-info">
                 <div class="filename" title="catppuccin-flower.png">catppuccin-flower.png</div>
                 <div class="metadata">64 × 64 • 838.0 B</div>
             </div>
         </div>
-        <div class="image-card" onclick="openLightbox(12)">
+        <div class="image-card" onclick="openLightbox(13)">
             <img class="thumbnail" data-src="png/catpuccin-bongo-pink-bg.png" alt="catpuccin-bongo-pink-bg.png">
             <div class="image-info">
                 <div class="filename" title="catpuccin-bongo-pink-bg.png">catpuccin-bongo-pink-bg.png</div>
                 <div class="metadata">2048 × 2048 • 22.3 KB</div>
             </div>
         </div>
-        <div class="image-card" onclick="openLightbox(13)">
+        <div class="image-card" onclick="openLightbox(14)">
             <img class="thumbnail" data-src="png/chess.png" alt="chess.png">
             <div class="image-info">
                 <div class="filename" title="chess.png">chess.png</div>
                 <div class="metadata">96 × 16 • 477.0 B</div>
             </div>
         </div>
-        <div class="image-card" onclick="openLightbox(14)">
+        <div class="image-card" onclick="openLightbox(15)">
             <img class="thumbnail" data-src="png/cowvader4k.png" alt="cowvader4k.png">
             <div class="image-info">
                 <div class="filename" title="cowvader4k.png">cowvader4k.png</div>
                 <div class="metadata">4096 × 4096 • 76.1 KB</div>
             </div>
         </div>
-        <div class="image-card" onclick="openLightbox(15)">
+        <div class="image-card" onclick="openLightbox(16)">
             <img class="thumbnail" data-src="png/e-grass-games-logo.png" alt="e-grass-games-logo.png">
             <div class="image-info">
                 <div class="filename" title="e-grass-games-logo.png">e-grass-games-logo.png</div>
                 <div class="metadata">4096 × 4096 • 75.2 KB</div>
             </div>
         </div>
-        <div class="image-card" onclick="openLightbox(16)">
+        <div class="image-card" onclick="openLightbox(17)">
             <img class="thumbnail" data-src="png/exit-button.png" alt="exit-button.png">
             <div class="image-info">
                 <div class="filename" title="exit-button.png">exit-button.png</div>
                 <div class="metadata">256 × 16 • 670.0 B</div>
             </div>
         </div>
-        <div class="image-card" onclick="openLightbox(17)">
+        <div class="image-card" onclick="openLightbox(18)">
             <img class="thumbnail" data-src="png/hashir_logo.png" alt="hashir_logo.png">
             <div class="image-info">
                 <div class="filename" title="hashir_logo.png">hashir_logo.png</div>
                 <div class="metadata">1507 × 848 • 7.9 KB</div>
             </div>
         </div>
-        <div class="image-card" onclick="openLightbox(18)">
+        <div class="image-card" onclick="openLightbox(19)">
             <img class="thumbnail" data-src="png/i-want-you.png" alt="i-want-you.png">
             <div class="image-info">
                 <div class="filename" title="i-want-you.png">i-want-you.png</div>
                 <div class="metadata">4096 × 4096 • 75.9 KB</div>
             </div>
         </div>
-        <div class="image-card" onclick="openLightbox(19)">
+        <div class="image-card" onclick="openLightbox(20)">
             <img class="thumbnail" data-src="png/idk-man.png" alt="idk-man.png">
             <div class="image-info">
                 <div class="filename" title="idk-man.png">idk-man.png</div>
                 <div class="metadata">2048 × 2048 • 21.3 KB</div>
             </div>
         </div>
-        <div class="image-card" onclick="openLightbox(20)">
+        <div class="image-card" onclick="openLightbox(21)">
             <img class="thumbnail" data-src="png/matrix-logo-v3.png" alt="matrix-logo-v3.png">
             <div class="image-info">
                 <div class="filename" title="matrix-logo-v3.png">matrix-logo-v3.png</div>
                 <div class="metadata">2048 × 2048 • 21.4 KB</div>
             </div>
         </div>
-        <div class="image-card" onclick="openLightbox(21)">
+        <div class="image-card" onclick="openLightbox(22)">
             <img class="thumbnail" data-src="png/matrix-logo.png" alt="matrix-logo.png">
             <div class="image-info">
                 <div class="filename" title="matrix-logo.png">matrix-logo.png</div>
                 <div class="metadata">2048 × 2048 • 21.0 KB</div>
             </div>
         </div>
-        <div class="image-card" onclick="openLightbox(22)">
+        <div class="image-card" onclick="openLightbox(23)">
             <img class="thumbnail" data-src="png/middle-eastern-churail.png" alt="middle-eastern-churail.png">
             <div class="image-info">
                 <div class="filename" title="middle-eastern-churail.png">middle-eastern-churail.png</div>
                 <div class="metadata">638 × 848 • 180.4 KB</div>
             </div>
         </div>
-        <div class="image-card" onclick="openLightbox(23)">
+        <div class="image-card" onclick="openLightbox(24)">
             <img class="thumbnail" data-src="png/mon-amor-shobz.png" alt="mon-amor-shobz.png">
             <div class="image-info">
                 <div class="filename" title="mon-amor-shobz.png">mon-amor-shobz.png</div>
                 <div class="metadata">1920 × 1920 • 20.6 KB</div>
             </div>
         </div>
-        <div class="image-card" onclick="openLightbox(24)">
+        <div class="image-card" onclick="openLightbox(25)">
             <img class="thumbnail" data-src="png/mr-angry-dude.png" alt="mr-angry-dude.png">
             <div class="image-info">
                 <div class="filename" title="mr-angry-dude.png">mr-angry-dude.png</div>
                 <div class="metadata">4096 × 4096 • 75.6 KB</div>
             </div>
         </div>
-        <div class="image-card" onclick="openLightbox(25)">
+        <div class="image-card" onclick="openLightbox(26)">
             <img class="thumbnail" data-src="png/nisar-mei-teri-galiyon.png" alt="nisar-mei-teri-galiyon.png">
             <div class="image-info">
                 <div class="filename" title="nisar-mei-teri-galiyon.png">nisar-mei-teri-galiyon.png</div>
                 <div class="metadata">4096 × 2048 • 39.3 KB</div>
             </div>
         </div>
-        <div class="image-card" onclick="openLightbox(26)">
+        <div class="image-card" onclick="openLightbox(27)">
             <img class="thumbnail" data-src="png/numas-reality.png" alt="numas-reality.png">
             <div class="image-info">
                 <div class="filename" title="numas-reality.png">numas-reality.png</div>
                 <div class="metadata">4096 × 4096 • 77.0 KB</div>
             </div>
         </div>
-        <div class="image-card" onclick="openLightbox(27)">
+        <div class="image-card" onclick="openLightbox(28)">
             <img class="thumbnail" data-src="png/peela.png" alt="peela.png">
             <div class="image-info">
                 <div class="filename" title="peela.png">peela.png</div>
                 <div class="metadata">4096 × 4096 • 75.4 KB</div>
             </div>
         </div>
-        <div class="image-card" onclick="openLightbox(28)">
+        <div class="image-card" onclick="openLightbox(29)">
             <img class="thumbnail" data-src="png/pop-os-logo.png" alt="pop-os-logo.png">
             <div class="image-info">
                 <div class="filename" title="pop-os-logo.png">pop-os-logo.png</div>
                 <div class="metadata">2048 × 2048 • 21.3 KB</div>
             </div>
         </div>
-        <div class="image-card" onclick="openLightbox(29)">
+        <div class="image-card" onclick="openLightbox(30)">
             <img class="thumbnail" data-src="png/poyo.png" alt="poyo.png">
             <div class="image-info">
                 <div class="filename" title="poyo.png">poyo.png</div>
                 <div class="metadata">2048 × 2048 • 22.0 KB</div>
             </div>
         </div>
-        <div class="image-card" onclick="openLightbox(30)">
+        <div class="image-card" onclick="openLightbox(31)">
             <img class="thumbnail" data-src="png/rust-blazinglyfast.png" alt="rust-blazinglyfast.png">
             <div class="image-info">
                 <div class="filename" title="rust-blazinglyfast.png">rust-blazinglyfast.png</div>
                 <div class="metadata">2048 × 2048 • 21.7 KB</div>
             </div>
         </div>
-        <div class="image-card" onclick="openLightbox(31)">
+        <div class="image-card" onclick="openLightbox(32)">
             <img class="thumbnail" data-src="png/start-button.png" alt="start-button.png">
             <div class="image-info">
                 <div class="filename" title="start-button.png">start-button.png</div>
                 <div class="metadata">256 × 16 • 743.0 B</div>
             </div>
         </div>
-        <div class="image-card" onclick="openLightbox(32)">
+        <div class="image-card" onclick="openLightbox(33)">
             <img class="thumbnail" data-src="png/templar-knight.png" alt="templar-knight.png">
             <div class="image-info">
                 <div class="filename" title="templar-knight.png">templar-knight.png</div>
                 <div class="metadata">32 × 32 • 683.0 B</div>
             </div>
         </div>
-        <div class="image-card" onclick="openLightbox(33)">
+        <div class="image-card" onclick="openLightbox(34)">
             <img class="thumbnail" data-src="png/the-angel-who-sees-all.png" alt="the-angel-who-sees-all.png">
             <div class="image-info">
                 <div class="filename" title="the-angel-who-sees-all.png">the-angel-who-sees-all.png</div>
                 <div class="metadata">1280 × 640 • 12.2 KB</div>
             </div>
         </div>
-        <div class="image-card" onclick="openLightbox(34)">
+        <div class="image-card" onclick="openLightbox(35)">
             <img class="thumbnail" data-src="png/the-lone-flower.png" alt="the-lone-flower.png">
             <div class="image-info">
                 <div class="filename" title="the-lone-flower.png">the-lone-flower.png</div>
                 <div class="metadata">4096 × 4096 • 75.7 KB</div>
             </div>
         </div>
-        <div class="image-card" onclick="openLightbox(35)">
+        <div class="image-card" onclick="openLightbox(36)">
             <img class="thumbnail" data-src="png/toodles.png" alt="toodles.png">
             <div class="image-info">
                 <div class="filename" title="toodles.png">toodles.png</div>
                 <div class="metadata">128 × 128 • 663.0 B</div>
             </div>
         </div>
-        <div class="image-card" onclick="openLightbox(36)">
-            <img class="thumbnail" data-src="png/voices-in-my-head.png" alt="voices-in-my-head.png">
-            <div class="image-info">
-                <div class="filename" title="voices-in-my-head.png">voices-in-my-head.png</div>
-                <div class="metadata">2048 × 2048 • 22.8 KB</div>
-            </div>
+    </div>
+
+    </main>
+</div>
+
+<script>
+    const imageData = [{"filename": "black-magic-image.png", "path": "showcase/black-magic-image.png", "width": 2048, "height": 2048, "size": "24.0 KB"}, {"filename": "bongi.png", "path": "showcase/bongi.png", "width": 4096, "height": 4096, "size": "76.2 KB"}, {"filename": "catpuccin-bongo.png", "path": "showcase/catpuccin-bongo.png", "width": 1024, "height": 1024, "size": "7.9 KB"}, {"filename": "neeli-peeli-billi.png", "path": "showcase/neeli-peeli-billi.png", "width": 4096, "height": 4096, "size": "75.7 KB"}, {"filename": "voices-in-my-head.png", "path": "showcase/voices-in-my-head.png", "width": 2048, "height": 2048, "size": "22.8 KB"}, {"filename": "white-lily.jpg", "path": "showcase/white-lily.jpg", "width": 6144, "height": 8160, "size": "10.2 MB"}, {"filename": "abd-car.png", "path": "png/abd-car.png", "width": 4096, "height": 4096, "size": "77.6 KB"}, {"filename": "abdrmn.png", "path": "png/abdrmn.png", "width": 4096, "height": 4096, "size": "76.0 KB"}, {"filename": "arch-logo.png", "path": "png/arch-logo.png", "width": 512, "height": 512, "size": "2.8 KB"}, {"filename": "bongo-pfp.png", "path": "png/bongo-pfp.png", "width": 3072, "height": 4080, "size": "8.2 MB"}, {"filename": "bongo_badmoshbg4k.png", "path": "png/bongo_badmoshbg4k.png", "width": 4096, "height": 4096, "size": "75.8 KB"}, {"filename": "bongo_khilafa4k.png", "path": "png/bongo_khilafa4k.png", "width": 4096, "height": 4096, "size": "75.5 KB"}, {"filename": "catppuccin-flower.png", "path": "png/catppuccin-flower.png", "width": 64, "height": 64, "size": "838.0 B"}, {"filename": "catpuccin-bongo-pink-bg.png", "path": "png/catpuccin-bongo-pink-bg.png", "width": 2048, "height": 2048, "size": "22.3 KB"}, {"filename": "chess.png", "path": "png/chess.png", "width": 96, "height": 16, "size": "477.0 B"}, {"filename": "cowvader4k.png", "path": "png/cowvader4k.png", "width": 4096, "height": 4096, "size": "76.1 KB"}, {"filename": "e-grass-games-logo.png", "path": "png/e-grass-games-logo.png", "width": 4096, "height": 4096, "size": "75.2 KB"}, {"filename": "exit-button.png", "path": "png/exit-button.png", "width": 256, "height": 16, "size": "670.0 B"}, {"filename": "hashir_logo.png", "path": "png/hashir_logo.png", "width": 1507, "height": 848, "size": "7.9 KB"}, {"filename": "i-want-you.png", "path": "png/i-want-you.png", "width": 4096, "height": 4096, "size": "75.9 KB"}, {"filename": "idk-man.png", "path": "png/idk-man.png", "width": 2048, "height": 2048, "size": "21.3 KB"}, {"filename": "matrix-logo-v3.png", "path": "png/matrix-logo-v3.png", "width": 2048, "height": 2048, "size": "21.4 KB"}, {"filename": "matrix-logo.png", "path": "png/matrix-logo.png", "width": 2048, "height": 2048, "size": "21.0 KB"}, {"filename": "middle-eastern-churail.png", "path": "png/middle-eastern-churail.png", "width": 638, "height": 848, "size": "180.4 KB"}, {"filename": "mon-amor-shobz.png", "path": "png/mon-amor-shobz.png", "width": 1920, "height": 1920, "size": "20.6 KB"}, {"filename": "mr-angry-dude.png", "path": "png/mr-angry-dude.png", "width": 4096, "height": 4096, "size": "75.6 KB"}, {"filename": "nisar-mei-teri-galiyon.png", "path": "png/nisar-mei-teri-galiyon.png", "width": 4096, "height": 2048, "size": "39.3 KB"}, {"filename": "numas-reality.png", "path": "png/numas-reality.png", "width": 4096, "height": 4096, "size": "77.0 KB"}, {"filename": "peela.png", "path": "png/peela.png", "width": 4096, "height": 4096, "size": "75.4 KB"}, {"filename": "pop-os-logo.png", "path": "png/pop-os-logo.png", "width": 2048, "height": 2048, "size": "21.3 KB"}, {"filename": "poyo.png", "path": "png/poyo.png", "width": 2048, "height": 2048, "size": "22.0 KB"}, {"filename": "rust-blazinglyfast.png", "path": "png/rust-blazinglyfast.png", "width": 2048, "height": 2048, "size": "21.7 KB"}, {"filename": "start-button.png", "path": "png/start-button.png", "width": 256, "height": 16, "size": "743.0 B"}, {"filename": "templar-knight.png", "path": "png/templar-knight.png", "width": 32, "height": 32, "size": "683.0 B"}, {"filename": "the-angel-who-sees-all.png", "path": "png/the-angel-who-sees-all.png", "width": 1280, "height": 640, "size": "12.2 KB"}, {"filename": "the-lone-flower.png", "path": "png/the-lone-flower.png", "width": 4096, "height": 4096, "size": "75.7 KB"}, {"filename": "toodles.png", "path": "png/toodles.png", "width": 128, "height": 128, "size": "663.0 B"}];
+</script>
+
+
+<!-- using website/page.js instead of page.js cause the output file be at root -->
+<script src="website/page.js"></script>
+
+<div id="lightbox" class="lightbox">
+    <div class="lightbox-content">
+        <button class="close-btn" onclick="closeLightbox()">&times;</button>
+        <img id="lightbox-image" class="lightbox-image" src="" alt="">
+        <div class="lightbox-info">
+            <div id="lightbox-filename" class="lightbox-filename"></div>
+            <div id="lightbox-metadata" class="lightbox-metadata"></div>
         </div>
     </div>
+</div>
 
-        </main>
-    </div>
-
-    <div class="bottom-bar">
-        <div class="socials">
-            <a href="https://bongopoyo.itch.io/" aria-label="itch.io">Itch</a>
-            <a href="https://www.youtube.com/@bongopoyo" aria-label="YouTube">YouTube</a>
-            <a href="https://github.com/bongopoyo" aria-label="GitHub">GitHub</a>
-            <a href="https://bsky.app/profile/bongopoyo.bsky.social" aria-label="Bluesky">BlueSky</a>
-            <a href="https://mastodon.social/@bongopoyo" aria-label="Mastodon">Mastodon</a>
-            <a href="mailto:bongopoyo@proton.me" aria-label="Email">Email</a>
-            <a href="https://matrix.to/#/@bongopoyo:matrix.org" aria-label="Matrix">Matrix</a>
-            <a href="https://discord.gg/cDxfzC28EZ" aria-label="Discord">Discord</a>
-        </div>
-    </div>
-
-    <div id="lightbox" class="lightbox">
-        <div class="lightbox-content">
-            <button class="close-btn" onclick="closeLightbox()">&times;</button>
-            <img id="lightbox-image" class="lightbox-image" src="" alt="">
-            <div class="lightbox-info">
-                <div id="lightbox-filename" class="lightbox-filename"></div>
-                <div id="lightbox-metadata" class="lightbox-metadata"></div>
-            </div>
-        </div>
-    </div>
-
-    <script>
-
-// Image data for navigation
-const imageData = [{"filename": "black-magic-image.png", "path": "showcase/black-magic-image.png", "width": 2048, "height": 2048, "size": "24.0 KB"}, {"filename": "bongi.png", "path": "showcase/bongi.png", "width": 4096, "height": 4096, "size": "76.2 KB"}, {"filename": "catpuccin-bongo.png", "path": "showcase/catpuccin-bongo.png", "width": 1024, "height": 1024, "size": "7.9 KB"}, {"filename": "neeli-peeli-billi.png", "path": "showcase/neeli-peeli-billi.png", "width": 4096, "height": 4096, "size": "75.7 KB"}, {"filename": "white-lily.jpg", "path": "showcase/white-lily.jpg", "width": 6144, "height": 8160, "size": "10.2 MB"}, {"filename": "abd-car.png", "path": "png/abd-car.png", "width": 4096, "height": 4096, "size": "77.6 KB"}, {"filename": "abdrmn.png", "path": "png/abdrmn.png", "width": 4096, "height": 4096, "size": "76.0 KB"}, {"filename": "arch-logo.png", "path": "png/arch-logo.png", "width": 512, "height": 512, "size": "2.8 KB"}, {"filename": "bongo-pfp.png", "path": "png/bongo-pfp.png", "width": 3072, "height": 4080, "size": "8.2 MB"}, {"filename": "bongo_badmoshbg4k.png", "path": "png/bongo_badmoshbg4k.png", "width": 4096, "height": 4096, "size": "75.8 KB"}, {"filename": "bongo_khilafa4k.png", "path": "png/bongo_khilafa4k.png", "width": 4096, "height": 4096, "size": "75.5 KB"}, {"filename": "catppuccin-flower.png", "path": "png/catppuccin-flower.png", "width": 64, "height": 64, "size": "838.0 B"}, {"filename": "catpuccin-bongo-pink-bg.png", "path": "png/catpuccin-bongo-pink-bg.png", "width": 2048, "height": 2048, "size": "22.3 KB"}, {"filename": "chess.png", "path": "png/chess.png", "width": 96, "height": 16, "size": "477.0 B"}, {"filename": "cowvader4k.png", "path": "png/cowvader4k.png", "width": 4096, "height": 4096, "size": "76.1 KB"}, {"filename": "e-grass-games-logo.png", "path": "png/e-grass-games-logo.png", "width": 4096, "height": 4096, "size": "75.2 KB"}, {"filename": "exit-button.png", "path": "png/exit-button.png", "width": 256, "height": 16, "size": "670.0 B"}, {"filename": "hashir_logo.png", "path": "png/hashir_logo.png", "width": 1507, "height": 848, "size": "7.9 KB"}, {"filename": "i-want-you.png", "path": "png/i-want-you.png", "width": 4096, "height": 4096, "size": "75.9 KB"}, {"filename": "idk-man.png", "path": "png/idk-man.png", "width": 2048, "height": 2048, "size": "21.3 KB"}, {"filename": "matrix-logo-v3.png", "path": "png/matrix-logo-v3.png", "width": 2048, "height": 2048, "size": "21.4 KB"}, {"filename": "matrix-logo.png", "path": "png/matrix-logo.png", "width": 2048, "height": 2048, "size": "21.0 KB"}, {"filename": "middle-eastern-churail.png", "path": "png/middle-eastern-churail.png", "width": 638, "height": 848, "size": "180.4 KB"}, {"filename": "mon-amor-shobz.png", "path": "png/mon-amor-shobz.png", "width": 1920, "height": 1920, "size": "20.6 KB"}, {"filename": "mr-angry-dude.png", "path": "png/mr-angry-dude.png", "width": 4096, "height": 4096, "size": "75.6 KB"}, {"filename": "nisar-mei-teri-galiyon.png", "path": "png/nisar-mei-teri-galiyon.png", "width": 4096, "height": 2048, "size": "39.3 KB"}, {"filename": "numas-reality.png", "path": "png/numas-reality.png", "width": 4096, "height": 4096, "size": "77.0 KB"}, {"filename": "peela.png", "path": "png/peela.png", "width": 4096, "height": 4096, "size": "75.4 KB"}, {"filename": "pop-os-logo.png", "path": "png/pop-os-logo.png", "width": 2048, "height": 2048, "size": "21.3 KB"}, {"filename": "poyo.png", "path": "png/poyo.png", "width": 2048, "height": 2048, "size": "22.0 KB"}, {"filename": "rust-blazinglyfast.png", "path": "png/rust-blazinglyfast.png", "width": 2048, "height": 2048, "size": "21.7 KB"}, {"filename": "start-button.png", "path": "png/start-button.png", "width": 256, "height": 16, "size": "743.0 B"}, {"filename": "templar-knight.png", "path": "png/templar-knight.png", "width": 32, "height": 32, "size": "683.0 B"}, {"filename": "the-angel-who-sees-all.png", "path": "png/the-angel-who-sees-all.png", "width": 1280, "height": 640, "size": "12.2 KB"}, {"filename": "the-lone-flower.png", "path": "png/the-lone-flower.png", "width": 4096, "height": 4096, "size": "75.7 KB"}, {"filename": "toodles.png", "path": "png/toodles.png", "width": 128, "height": 128, "size": "663.0 B"}, {"filename": "voices-in-my-head.png", "path": "png/voices-in-my-head.png", "width": 2048, "height": 2048, "size": "22.8 KB"}];
-
-let currentIndex = 0;
-
-// Get current grid column count based on window width
-function getGridColumns() {
-    const width = window.innerWidth;
-    if (width >= 1200) return 5;
-    if (width >= 769) return 3;
-    return 1;
-}
-
-// Lazy load images
-document.addEventListener('DOMContentLoaded', () => {
-    const images = document.querySelectorAll('.thumbnail[data-src]');
-
-    const imageObserver = new IntersectionObserver((entries, observer) => {
-        entries.forEach(entry => {
-            if (entry.isIntersecting) {
-                const img = entry.target;
-                img.src = img.dataset.src;
-                img.removeAttribute('data-src');
-                imageObserver.unobserve(img);
-            }
-        });
-    });
-
-    images.forEach(img => imageObserver.observe(img));
-});
-
-// Lightbox functions
-function openLightbox(index) {
-    currentIndex = index;
-    const lightbox = document.getElementById('lightbox');
-    const lightboxImg = document.getElementById('lightbox-image');
-    const filename = document.getElementById('lightbox-filename');
-    const metadata = document.getElementById('lightbox-metadata');
-
-    const data = imageData[index];
-    lightboxImg.src = data.path;
-    filename.textContent = data.filename;
-    metadata.textContent = `${data.width} × ${data.height} • ${data.size}`;
-
-    lightbox.classList.add('active');
-    document.body.style.overflow = 'hidden';
-}
-
-function closeLightbox() {
-    const lightbox = document.getElementById('lightbox');
-    lightbox.classList.remove('active');
-    document.body.style.overflow = '';
-}
-
-function showImage(index) {
-    if (index < 0) index = imageData.length - 1;
-    if (index >= imageData.length) index = 0;
-
-    currentIndex = index;
-    const lightboxImg = document.getElementById('lightbox-image');
-    const filename = document.getElementById('lightbox-filename');
-    const metadata = document.getElementById('lightbox-metadata');
-
-    const data = imageData[index];
-    lightboxImg.src = data.path;
-    filename.textContent = data.filename;
-    metadata.textContent = `${data.width} × ${data.height} • ${data.size}`;
-}
-
-function navigate(direction) {
-    showImage(currentIndex + direction);
-}
-
-// Keyboard navigation
-document.addEventListener('keydown', (e) => {
-    const lightbox = document.getElementById('lightbox');
-    if (!lightbox.classList.contains('active')) return;
-
-    switch(e.key) {
-        case 'ArrowLeft':
-        case 'h':
-            navigate(-1);
-            break;
-        case 'ArrowRight':
-        case 'l':
-            navigate(1);
-            break;
-        case 'ArrowUp':
-        case 'k':
-            // Navigate up by row (adapts to current grid size)
-            navigate(-getGridColumns());
-            break;
-        case 'ArrowDown':
-        case 'j':
-            // Navigate down by row (adapts to current grid size)
-            navigate(getGridColumns());
-            break;
-        case 'q':
-        case 'Escape':
-            closeLightbox();
-            break;
-    }
-});
-
-// Close lightbox on click outside
-document.getElementById('lightbox').addEventListener('click', (e) => {
-    if (e.target.id === 'lightbox') {
-        closeLightbox();
-    }
-});
-
-    </script>
 </body>
 </html>

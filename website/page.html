@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+
+    <!-- using website/page.css instead of page.css cause the output file be at root -->
+    <link rel="stylesheet" href="website/page.css"> 
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Artwork</title>
+</head>
+<body>
+
+<div class="top-bar">
+    <a href="{{main_site}}" class="logo">[Back]</a>
+</div>
+
+<div class="main-content">
+    <div class="header-content">
+        <h1>Artwork</h1>
+        <div class="links">
+            <a href="{{main_site}}" target="_blank">Main Website</a>
+            <a href="{{github_repo}}" target="_blank">GitHub Repo</a>
+        </div>
+    </div>
+
+    <main>
+        {{gallery}}
+    </main>
+</div>
+
+<script>
+    const imageData = {{image_data}};
+</script>
+
+
+<!-- using website/page.js instead of page.js cause the output file be at root -->
+<script src="website/page.js"></script>
+
+<div id="lightbox" class="lightbox">
+    <div class="lightbox-content">
+        <button class="close-btn" onclick="closeLightbox()">&times;</button>
+        <img id="lightbox-image" class="lightbox-image" src="" alt="">
+        <div class="lightbox-info">
+            <div id="lightbox-filename" class="lightbox-filename"></div>
+            <div id="lightbox-metadata" class="lightbox-metadata"></div>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>
