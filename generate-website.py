@@ -9,7 +9,9 @@ import json
 from pathlib import Path
 
 PNG_DIR = Path("png")
+GIF_DIR = Path("gif")
 SHOWCASE_DIR = Path("showcase")
+
 
 TEMPLATE_FILE = Path("website/page.html")
 OUTPUT_FILE = Path("index.html")
@@ -17,17 +19,17 @@ OUTPUT_FILE = Path("index.html")
 GITHUB_REPO = "https://github.com/BongoPoyo/Artwork"
 MAIN_SITE = "https://bongopoyo.github.io/"
 
-SUPPORTED_EXTENSIONS = ('.png', '.jpg', '.jpeg', '.webp')
+SUPPORTED_EXTENSIONS = ('.png', '.jpg', '.jpeg', '.webp', '.gif')
 
-def get_images(directory: Path):
-    """Return sorted list of PNG files in a directory."""
-    if not directory.exists():
-        return []
+# def get_images(directory: Path):
+#     """Return sorted list of PNG files in a directory."""
+#     if not directory.exists():
+#         return []
 
-    return sorted([
-        f for f in directory.iterdir()
-        if f.suffix.lower() == ".png"
-    ])
+#     return sorted([
+#         f for f in directory.iterdir()
+#         if f.suffix.lower() == ".png"
+#     ])
 
 
 def render_images(images, base_path):
@@ -54,7 +56,7 @@ def collect_images():
         print(f"⚠️  Warning: {PNG_DIR} directory not found")
         return images
 
-    for base_dir in [SHOWCASE_DIR, PNG_DIR]:
+    for base_dir in [SHOWCASE_DIR, PNG_DIR, GIF_DIR]:
         if not base_dir.exists():
             continue
         
@@ -67,8 +69,10 @@ def collect_images():
 
                     if base_dir == SHOWCASE_DIR:
                         rel_path = Path('showcase') / rel_path
-                    else:
+                    elif base_dir == PNG_DIR:
                         rel_path = Path('png') / rel_path
+                    elif base_dir == GIF_DIR:
+                        rel_path = Path('gif') / rel_path
 
                     try:
                         from PIL import Image
