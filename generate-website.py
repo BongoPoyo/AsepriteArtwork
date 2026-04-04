@@ -152,21 +152,19 @@ def main():
 
     showcase_images = []
     other_images = []
-    showcase_filenames = set()
+    gif_images = []
 
-    # Split showcase
+    # Split by directory
     for img in all_images:
         if img['path'].startswith('showcase/'):
             showcase_images.append(img)
-            showcase_filenames.add(img['filename'])
-
-    # Remaining images
-    for img in all_images:
-        if img['path'].startswith('png/') and img['filename'] not in showcase_filenames:
+        elif img['path'].startswith('gif/'):
+            gif_images.append(img)
+        elif img['path'].startswith('png/'):
             other_images.append(img)
 
     # Maintain ordering consistency
-    image_data = showcase_images + other_images
+    image_data = showcase_images + other_images + gif_images
 
     # Generate gallery HTML
     gallery_html = generate_gallery_html(showcase_images, other_images)
