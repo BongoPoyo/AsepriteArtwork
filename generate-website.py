@@ -173,6 +173,12 @@ def render_template(template: str, context: dict):
         template = template.replace(f"{{{{{key}}}}}", value)
     return template
 
+def generate_navigation_buttons():
+    """Generate HTML for section navigation buttons."""
+    return '''        <a href="#showcase" class="nav-button">Artwork</a>
+        <a href="#other" class="nav-button">Other Artwork</a>
+        <a href="#gifs" class="nav-button">Gifs</a>'''
+
 def main():
     print("🎨 Generating Artwork Gallery...")
 
@@ -207,6 +213,7 @@ def main():
     # Inject values
     html_content = render_template(template, {
         "gallery": gallery_html,
+        "navigation_buttons": generate_navigation_buttons(),
         "image_data": js_data,
         "main_site": MAIN_SITE,
         "github_repo": GITHUB_REPO
