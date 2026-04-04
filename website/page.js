@@ -46,6 +46,7 @@ function openLightbox(index) {
 
     lightbox.classList.add('active');
     document.body.style.overflow = 'hidden';
+    trapFocus();
 }
 
 // Close lightbox
@@ -78,6 +79,36 @@ function navigate(direction) {
     showImage(currentIndex + direction);
 }
 
+// Trap focus within lightbox
+function trapFocus() {
+    const lightbox = document.getElementById('lightbox');
+    if (!lightbox) return;
+
+    const focusableElements = lightbox.querySelectorAll(
+        'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])'
+    );
+    const firstElement = focusableElements[0];
+    const lastElement = focusableElements[focusableElements.length - 1];
+
+    const handleTabKey = (e) => {
+        if (e.key !== 'Tab') return;
+
+        if (e.shiftKey) {
+            if (document.activeElement === firstElement) {
+                e.preventDefault();
+                lastElement.focus();
+            }
+        } else {
+            if (document.activeElement === lastElement) {
+                e.preventDefault();
+                firstElement.focus();
+            }
+        }
+    };
+
+    lightbox.addEventListener('keydown', handleTabKey);
+}
+
 // Keyboard controls (vim-style included)
 document.addEventListener('keydown', (e) => {
     const lightbox = document.getElementById('lightbox');
@@ -108,6 +139,16 @@ document.addEventListener('keydown', (e) => {
         case 'ArrowDown':
         case 'j':
             navigate(getGridColumns());
+            break;
+
+        case 'Home':
+            showImage(0);
+            e.preventDefault();
+            break;
+
+        case 'End':
+            showImage(imageData.length - 1);
+            e.preventDefault();
             break;
 
         case 'Escape':
