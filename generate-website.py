@@ -94,17 +94,18 @@ def collect_images():
 
     return images
 
-def generate_gallery_html(showcase_images, other_images):
-    """Generate HTML for two-section gallery."""
+def generate_gallery_html(showcase_images, other_images, gif_images):
+    """Generate HTML for three-section gallery."""
 
     html = ""
 
+    # Artwork section
     if showcase_images:
-        html += '<h1 class="section-title">Showcase</h1>\n'
+        html += '<h1 id="showcase" class="section-title">Artwork</h1>\n'
         html += '<div class="gallery">\n'
 
         for i, img in enumerate(showcase_images):
-            html += f'''        <div class="image-card" onclick="openLightbox({i})">
+            html += f'''        <div class="image-card" tabindex="0" role="button" aria-label="View {img['filename']}" onclick="openLightbox({i})">
             <img class="thumbnail" data-src="{img['path']}" alt="{img['filename']}">
             <div class="image-info">
                 <div class="filename" title="{img['filename']}">{img['filename']}</div>
@@ -113,15 +114,40 @@ def generate_gallery_html(showcase_images, other_images):
         </div>\n'''
 
         html += '    </div>\n\n'
+    else:
+        html += '<h1 id="showcase" class="section-title">Artwork</h1>\n'
+        html += '<p class="empty-state">No artwork yet.</p>\n\n'
 
-    if other_images: 
+    # Other Artwork section
+    if other_images:
         offset = len(showcase_images)
 
-        html += '<h1 class="section-title">Other Artwork</h1>\n'
+        html += '<h1 id="other" class="section-title">Other Artwork</h1>\n'
         html += '<div class="gallery">\n'
 
         for i, img in enumerate(other_images):
-            html += f'''        <div class="image-card" onclick="openLightbox({i + offset})">
+            html += f'''        <div class="image-card" tabindex="0" role="button" aria-label="View {img['filename']}" onclick="openLightbox({i + offset})">
+            <img class="thumbnail" data-src="{img['path']}" alt="{img['filename']}">
+            <div class="image-info">
+                <div class="filename" title="{img['filename']}">{img['filename']}</div>
+                <div class="metadata">{img['width']} × {img['height']} • {img['size']}</div>
+            </div>
+        </div>\n'''
+
+        html += '    </div>\n\n'
+    else:
+        html += '<h1 id="other" class="section-title">Other Artwork</h1>\n'
+        html += '<p class="empty-state">No other artwork yet.</p>\n\n'
+
+    # GIFs section
+    if gif_images:
+        offset = len(showcase_images) + len(other_images)
+
+        html += '<h1 id="gifs" class="section-title">Gifs</h1>\n'
+        html += '<div class="gallery">\n'
+
+        for i, img in enumerate(gif_images):
+            html += f'''        <div class="image-card" tabindex="0" role="button" aria-label="View {img['filename']}" onclick="openLightbox({i + offset})">
             <img class="thumbnail" data-src="{img['path']}" alt="{img['filename']}">
             <div class="image-info">
                 <div class="filename" title="{img['filename']}">{img['filename']}</div>
@@ -130,6 +156,9 @@ def generate_gallery_html(showcase_images, other_images):
         </div>\n'''
 
         html += '    </div>\n'
+    else:
+        html += '<h1 id="gifs" class="section-title">Gifs</h1>\n'
+        html += '<p class="empty-state">No gifs yet.</p>\n'
 
     return html
 
@@ -167,7 +196,7 @@ def main():
     image_data = showcase_images + other_images + gif_images
 
     # Generate gallery HTML
-    gallery_html = generate_gallery_html(showcase_images, other_images)
+    gallery_html = generate_gallery_html(showcase_images, other_images, gif_images)
 
     # Proper JSON (IMPORTANT FIX)
     js_data = json.dumps(image_data)
