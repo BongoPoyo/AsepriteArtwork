@@ -8,9 +8,9 @@ import os
 import json
 from pathlib import Path
 
-PNG_DIR = Path("png")
-GIF_DIR = Path("gif")
-SHOWCASE_DIR = Path("showcase")
+PNG_DIR = Path("website/png")
+GIF_DIR = Path("website/gif")
+SHOWCASE_DIR = Path("website/showcase")
 
 
 TEMPLATE_FILE = Path("website/page.html")
@@ -57,11 +57,12 @@ def collect_images():
                     rel_path = filepath.relative_to(base_dir)
 
                     if base_dir == SHOWCASE_DIR:
-                        rel_path = Path('showcase') / rel_path
+                        rel_path = Path("website/showcase") / rel_path
                     elif base_dir == PNG_DIR:
-                        rel_path = Path('png') / rel_path
+                        rel_path = Path("website/png") / rel_path
+                        
                     elif base_dir == GIF_DIR:
-                        rel_path = Path('gif') / rel_path
+                        rel_path = Path("website/gif") / rel_path
 
                     try:
                         from PIL import Image
@@ -180,11 +181,11 @@ def main():
 
     # Split by directory
     for img in all_images:
-        if img['path'].startswith('showcase/'):
+        if img['path'].startswith('website/showcase/'):
             showcase_images.append(img)
-        elif img['path'].startswith('gif/'):
+        elif img['path'].startswith('website/gif/'):
             gif_images.append(img)
-        elif img['path'].startswith('png/'):
+        elif img['path'].startswith('website/png/'):
             other_images.append(img)
 
     # Maintain ordering consistency
