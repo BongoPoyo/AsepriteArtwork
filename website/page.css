@@ -396,8 +396,18 @@ img[src$=".gif"], .thumbnail[data-src$=".gif"] {
 /* Mobile responsive */
 @media (max-width: 768px) {
     body {
-        padding: 80px 10px 120px 10px;
+        padding: 20px ;
     }
+
+    .top-bar {
+        display: none !important;
+        opacity: 0;
+        visibility: hidden;
+        height: 0;
+        overflow: hidden;
+        pointer-events: none;
+    }
+    
 
     .gallery {
         grid-template-columns: 1fr;
